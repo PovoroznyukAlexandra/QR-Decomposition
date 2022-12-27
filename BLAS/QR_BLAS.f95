@@ -37,9 +37,8 @@ PROGRAM main
         Mod = sqrt(R(i, i)*R(i, i) + R(j, i)*R(j, i))
         c = R(i, i) / Mod
         s = -R(j, i) / Mod
-        call Rotation(n, i, j, c, s, Q);
         call drot(n, Q(:, i), 1, Q(:, j), 1, c, -s)
-        call Rotation(n, i, j, c, s, R);
+        call drot(n, R(:, i), 1, R(:, j), 1, c, -s)
     end do
     end do
     
