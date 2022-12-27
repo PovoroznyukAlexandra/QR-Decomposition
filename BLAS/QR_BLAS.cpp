@@ -146,9 +146,8 @@ int main(){
         for (int j = (i + 1); j < n; j++){
             double mod = sqrt(R(i, i) * R(i, i) + R(j, i) * R(j, i));
             double c = R(i, i) / mod, s = -R(j, i) / mod;
-            cblas_drot(n, R, i, R, j, c, -s);
-            Rotation(n, i, j, c, s, Q);
-            Rotation(n, i, j, c, s, R);
+            cblas_drot(n, &Q(i, j), 1, &Q(i, j), 1, c, -s);
+            cblas_drot(n, &R(i, j), 1, &R(i, j), 1, c, -s);
         }
     }
     Transpose(n, Q);
