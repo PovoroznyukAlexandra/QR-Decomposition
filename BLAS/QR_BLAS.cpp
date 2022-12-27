@@ -140,14 +140,14 @@ int main(){
 //-------------------------------------------------------------------------------------------------------------//
     // Начало замера времени
     auto begin = std::chrono::steady_clock::now();
-
+    double tmp = 1;
     // Вращение матриц
     for (int i = 0; i < (n - 1); i++){
         for (int j = (i + 1); j < n; j++){
             double mod = sqrt(R(i, i) * R(i, i) + R(j, i) * R(j, i));
             double c = R(i, i) / mod, s = -R(j, i) / mod;
-            cblas_drot(n, &Q(i, j), 1, &Q(i, j), 1, c, -s);
-            cblas_drot(n, &R(i, j), 1, &R(i, j), 1, c, -s);
+            cblas_drot(n, &Q(i, j), tmp, &Q(i, j), tmp, c, -s);
+            cblas_drot(n, &R(i, j), tmp, &R(i, j), tmp, c, -s);
         }
     }
     Transpose(n, Q);
@@ -157,15 +157,6 @@ int main(){
     std::chrono::duration<double> elapsed_seconds = end - begin;
     std::cout << "Duration: " << elapsed_seconds.count() << " sec\n";
 //-------------------------------------------------------------------------------------------------------------//
-
-    // Проверка того, что R - правая треугольная матрица
-    Check_Right_Triang(n, R);
-
-    // Проверка унитарности Q
-    Check_Unitary(n, Q);
-
-    // Подсчет ошибки вычисления
-    Check_Accuracy(n, A, Q, R);
 
     return 0;
 }
